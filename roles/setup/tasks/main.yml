@@ -1,0 +1,17 @@
+---
+- name: "update apt packages"
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: "Install SOftware properties common to all servers"
+  become: yes
+  apt:
+    upgrade: yes
+
+- name: "install dependencies"
+  become: yes
+  apt:
+    name: ["ansible"]
+    state: latest
+    update_cache: yes
