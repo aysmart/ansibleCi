@@ -18,7 +18,7 @@ jobs:
           name: Install Ansible
           command: |
             # Install Ansible
-            apk add --update ansible
+            apt add --update ansible
       - run:
           name: Run Playbook and Configure server
           command: |
