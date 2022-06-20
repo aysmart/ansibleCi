@@ -2,7 +2,6 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-
 commands:
    # Exercise - Rollback
   destroy_environment:
@@ -18,43 +17,6 @@ commands:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  # Exercise: Config and Deployment
-  configure_infrastructure: 
-    docker:
-      - image: python:3.7-alpine3.11
-    steps:
-      - checkout
-      - add_ssh_keys:
-              # You can get this ID in the section where you registered the SSH Key
-              fingerprints: ["26:4a:e7:7a:50:d1:8f:54:45:dd:f4:c7:42:d9:e4:40"] 
-      - run:
-          name: Install Ansible
-          command: |
-            # Install Ansible
-            apk add --update ansible
-      - run:
-          name: Run Playbook and Configure server
-          command: |
-            # Your command
-            ansible-playbook -i inventory main.yml --key-file ~/.ssh/id_rsa_264ae77a50d18f5445ddf4c742d9e440
-
-  # smoke_test:
-  #   docker:
-  #     - image: alpine:latest
-  #   steps:
-  #     - run: apk add --update curl
-  #     - run:
-  #         name: smoke test
-  #         command: |
-  #           URL="https://blog.udacity123.com/"
-  #           # Test if website exists
-  #           if curl -s --head ${URL} 
-  #           then
-  #             return 0
-  #           else
-  #             return 1
-  #           fi
-
   # Exercise - Rollback
   create_infrastructure: 
     docker:
@@ -75,6 +37,4 @@ jobs:
 workflows:
   my_workflow:
       jobs:
-        # - configure_infrastructur
         - create_infrastructure
-        # - smoke_test
