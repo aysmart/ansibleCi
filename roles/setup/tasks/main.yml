@@ -14,11 +14,20 @@
   apt:
     autoremove: yes
 
+- name: "install libssl1.0-dev"
+  become: yes
+  apt:
+    name: 
+      - libssl1.0-dev
+    state: latest
+    update_cache: yes
+
 - name: "install dependencies"
   become: yes
   apt:
     name: 
       - nodejs
+      - npm
     state: latest
     update_cache: yes
   
