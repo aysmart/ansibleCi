@@ -1,5 +1,5 @@
 ---
-- name: "setup Ansible"
+- name: "Setup Server for Node Js"
   hosts: control
   user: ubuntu
   become: true
