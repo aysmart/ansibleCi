@@ -2,35 +2,31 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-# commands:
-#    # Exercise - Rollback
-#   destroy_environment:
-#     steps:
-#       - run:
-#           name: Destroy environment
-#            # ${CIRCLE_WORKFLOW_ID} is a Built-in environment variable 
-#            # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
-#           when: on_fail
-#           command: |
-#              aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
-
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  create_infrastructure: 
-      docker:
-        - image: amazon/aws-cli
-      steps:
-        - checkout
-        - run:
-            name: Create Cloudformation Stack
-            command: |
-              aws cloudformation deploy \
-                --template-file template.yml \
-                --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
-                --region us-east-1
+  # Exercise: Config and Deployment
+  configure_infrastructure: 
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+              # You can get this ID in the section where you registered the SSH Key
+              fingerprints: ["26:4a:e7:7a:50:d1:8f:54:45:dd:f4:c7:42:d9:e4:40"] 
+      - run:
+          name: Install Ansible
+          command: |
+            # Install Ansible
+            apk add --update ansible
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            # Your command
+            ansible-playbook -i inventory main.yml --key-file ~/.ssh/id_rsa_264ae77a50d18f5445ddf4c742d9e440
+            
 
 workflows:
   my_workflow:
       jobs:
-        - create_infrastructure
+        - configure_infrastructure
