@@ -83,6 +83,6 @@ jobs:
 workflows:
   my_workflow:
       jobs:
-        # - configure_infrastructure
+        # - configure_infrastructur
         - create_infrastructure
         - smoke_test
