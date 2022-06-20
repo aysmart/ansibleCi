@@ -1,5 +1,5 @@
 ---
-- name: "Setup Server for Node Js"
+- name: "Setup Server - Node Js"
   hosts: control
   user: ubuntu
   become: true
