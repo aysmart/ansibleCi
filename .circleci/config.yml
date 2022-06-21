@@ -19,24 +19,24 @@ commands:
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   # Exercise: Config and Deployment
-  configure_infrastructure: 
-    docker:
-      - image: python:3.7-alpine3.11
-    steps:
-      - checkout
-      - add_ssh_keys:
-              # You can get this ID in the section where you registered the SSH Key
-              fingerprints: ["26:4a:e7:7a:50:d1:8f:54:45:dd:f4:c7:42:d9:e4:40"] 
-      - run:
-          name: Install Ansible
-          command: |
-            # Install Ansible
-            apk add --update ansible
-      - run:
-          name: Run Playbook and Configure server
-          command: |
-            # Your command
-            ansible-playbook -i inventory main.yml --key-file ~/.ssh/id_rsa_264ae77a50d18f5445ddf4c742d9e440
+  # configure_infrastructure: 
+  #   docker:
+  #     - image: python:3.7-alpine3.11
+  #   steps:
+  #     - checkout
+  #     - add_ssh_keys:
+  #             # You can get this ID in the section where you registered the SSH Key
+  #             fingerprints: ["26:4a:e7:7a:50:d1:8f:54:45:dd:f4:c7:42:d9:e4:40"] 
+  #     - run:
+  #         name: Install Ansible
+  #         command: |
+  #           # Install Ansible
+  #           apk add --update ansible
+  #     - run:
+  #         name: Run Playbook and Configure server
+  #         command: |
+  #           # Your command
+  #           ansible-playbook -i inventory main.yml --key-file ~/.ssh/id_rsa_264ae77a50d18f5445ddf4c742d9e440
 
   # smoke_test:
   #   docker:
@@ -70,7 +70,7 @@ jobs:
               --region us-east-1
       - run: return 1
       - destroy_environment:
-          when: on_fail
+        when: on_fail
 
   # Exercise: Smoke Testing
  
@@ -80,4 +80,4 @@ workflows:
       jobs:
         # - configure_infrastructure
         - create_infrastructure
-        - smoke_test
+       # - smoke_test
